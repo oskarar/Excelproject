@@ -67,15 +67,58 @@ def same_transfer(source, destination):
     return
 
 
-def copy(source, target):
-    wb = Workbook
-    source = wb.active
-    target = wb.copy_worksheet(source)
+def different_transfer(source, destination):
+    row_start_source = int(input("row_start:"))
+    row_end_source = int(input("row_end:"))
+    column_start_source = int(input("column_start:"))
+    column_end_source = int(input("column_end:"))
+    print("rows in source file", row_start_source, "-", row_end_source, "columns in source file", column_start_source,
+          "-", column_end_source)
+    row_start_destination = int(input("row_start:"))
+    row_end_destination = int(input("row_end:"))
+    column_start_destination = int(input("column_start:"))
+    column_end_destination = int(input("column_end:"))
+    print("rows in destination file", row_start_destination, "-", row_end_destination,
+          "columns in destination file", column_start_destination, "-", column_end_destination)
+    wb1 = load_workbook(filename=source)
+    wb2 = load_workbook(filename=destination)
+    ws1 = wb1.active
+    ws2 = wb2.active
+    c = []
+    for row in range(row_start_source, row_end_source + 1):
+        for col in range(column_start_source, column_end_source + 1):
+            c.append(ws1.cell(row=row, column=col))
+    print(c)
 
     return
 
 
+def actual_transfer(source, destination):
+    wb1 = load_workbook(filename=source)
+    wb2 = load_workbook(filename=destination)
+    ws1 = wb1.active
+    ws2 = wb2.active
+
+    #used for converting the column letter to numbers so i get an easier coordinate to work with
+    counter = 0
+    for column in range(1, ws1.max_column):
+        column_letter = get_column_letter(column)
+        for row in range(1, ws1.max_row):
+            counter += 1
+            ws1[column_letter+str(row)] = counter
+
+
+
+
+def copy(source, target):
+    wb = Workbook
+    source = wb.active
+    target = wb.copy_worksheet(source)
+    return
+
+
 if __name__ == '__main__':
+    """
     sg.theme('DarkAmber')
     layout = [
         [sg.Text('Source file:'), sg.Input(), sg.FileBrowse()],
@@ -91,9 +134,12 @@ if __name__ == '__main__':
         print('Destination file', values[1])
 
     window.close()
-    #simple_write_commands()
+    """
+
+    simple_write_commands()
     #simple_read_commands()
 
-    same_transfer(values[0], values[1])
+    #same_transfer(values[0], values[1])
+    #different_transfer(values[0], values[1])
     #move(values[0], values[1])
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
