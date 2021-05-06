@@ -9,6 +9,7 @@ import PySimpleGUI as sg
 import openpyxl
 import datetime
 import xlsxwriter
+from Safetycopy import *
 
 
 def simple_read_commands():
@@ -47,7 +48,7 @@ def simple_write_commands():
     wb.save(filename=dest_filename)
 
 
-def transfer(source, destination):
+def same_transfer(source, destination):
     row_start = int(input("row_start:"))
     row_end = int(input("row_end:"))
     column_start = int(input("column_start:"))
@@ -90,7 +91,9 @@ if __name__ == '__main__':
         print('Destination file', values[1])
 
     window.close()
-    simple_write_commands()
-    simple_read_commands()
-    transfer(values[0], values[1])
+    #simple_write_commands()
+    #simple_read_commands()
+
+    same_transfer(values[0], values[1])
+    #move(values[0], values[1])
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
