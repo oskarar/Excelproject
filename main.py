@@ -47,24 +47,22 @@ def simple_write_commands():
     wb.save(filename=dest_filename)
 
 
-def transfer(start, finish):
+def transfer(source, destination):
     row_start = int(input("row_start:"))
     row_end = int(input("row_end:"))
     column_start = int(input("column_start:"))
     column_end = int(input("column_end:"))
     print("rows", row_start, "-", row_end, "columns", column_start, "-", column_end)
 
-    start = start + '.xlsx'
-    finish = finish + '.xlsx'
-    wb1 = load_workbook(filename=start)
-    wb2 = load_workbook(filename=finish)
+    wb1 = load_workbook(filename=source)
+    wb2 = load_workbook(filename=destination)
     ws1 = wb1.active
     ws2 = wb2.active
     for row in range(row_start, row_end + 1):
         for col in range(column_start, column_end + 1):
             c = ws1.cell(row=row, column=col)
             ws2.cell(row=row, column=col).value = c.value
-    wb2.save(finish)
+    wb2.save(destination)
     return
 
 
@@ -79,8 +77,8 @@ def copy(source, target):
 if __name__ == '__main__':
     sg.theme('DarkAmber')
     layout = [
-        [sg.Text('Some text on row 1')],
-        [sg.Text('Enter something on row 2'), sg.InputText()],
+        [sg.Text('Source file:'), sg.Input(), sg.FileBrowse()],
+        [sg.Text('Destination file:'), sg.Input(), sg.FileBrowse()],
         [sg.Button('Ok'), sg.Button('Cancel')]]
 
     window = sg.Window('Window Title', layout, )
@@ -88,10 +86,11 @@ if __name__ == '__main__':
         event, values = window.read()
         if event == sg.WIN_CLOSED or event == 'Cancel':  # if user closes window or clicks cancel
             break
-        print('You entered ', values[0])
+        print('source file ', values[0])
+        print('Destination file', values[1])
 
     window.close()
     simple_write_commands()
     simple_read_commands()
-    #transfer('start', 'finish')
+    transfer(values[0], values[1])
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
