@@ -98,6 +98,7 @@ def actual_transfer(source, destination):
     wb2 = load_workbook(filename=destination)
     ws1 = wb1.active
     ws2 = wb2.active
+    to_append = ()
 
     #used for converting the column letter to numbers so i get an easier coordinate to work with
     counter = 0
@@ -110,7 +111,7 @@ def actual_transfer(source, destination):
 
 
 
-def copy(source, target):
+def copy_sheet(source, target):
     wb = Workbook
     source = wb.active
     target = wb.copy_worksheet(source)
@@ -118,23 +119,7 @@ def copy(source, target):
 
 
 if __name__ == '__main__':
-    """
-    sg.theme('DarkAmber')
-    layout = [
-        [sg.Text('Source file:'), sg.Input(), sg.FileBrowse()],
-        [sg.Text('Destination file:'), sg.Input(), sg.FileBrowse()],
-        [sg.Button('Ok'), sg.Button('Cancel')]]
 
-    window = sg.Window('Window Title', layout, )
-    while True:
-        event, values = window.read()
-        if event == sg.WIN_CLOSED or event == 'Cancel':  # if user closes window or clicks cancel
-            break
-        print('source file ', values[0])
-        print('Destination file', values[1])
-
-    window.close()
-    """
 
     simple_write_commands()
     #simple_read_commands()
